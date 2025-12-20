@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fashion Buddhi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"> <!-- For icons -->
+    <style>
+        body { font-family: 'Poppins', sans-serif; background: linear-gradient(to bottom, #f5f5f5, #e0e0e0); color: #333; }
+        .hero { background: linear-gradient(135deg, #ff6b6b 0%, #4ecdc4 100%); color: white; padding: 80px 0; text-align: center; }
+        .carousel-item img {
+    height: 400px;
+    object-fit: cover;
+}
+
+@media (max-width: 768px) {
+    .carousel-item img {
+        height: 250px;
+    }
+}
+
+        .product-card { transition: transform 0.3s; border-radius: 15px; overflow: hidden; box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
+        .card-img-top {
+    height: 260px;
+    object-fit: cover;
+}
+
+.card-text {
+    color: #2ecc71;
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+.btn-affiliate {
+    background: linear-gradient(135deg, #ff6b6b, #ff3b3b);
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    padding: 10px 22px;
+    color: white;
+}
+
+.btn-affiliate:hover {
+    background: linear-gradient(135deg, #ff3b3b, #e63939);
+}
+
+    </style>
+</head>
+<body>
+    <header class="hero">
+        <div class="container">
+            <h1>Fashion Buddhi Finds</h1>
+            <p>Discover trendy styles for men and women with exclusive affiliate deals!</p>
+        </div>
+    </header>
+
+    <!-- Product Slider -->
+    <section class="container my-5">
+        <h2 class="section-title">Featured Styles</h2>
+        <div id="product-slider" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner" id="slider-inner">
+                <!-- Slider items loaded dynamically -->
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#product-slider" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#product-slider" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Men's and Women's Sections -->
+    <section class="container my-5">
+        <ul class="nav nav-tabs justify-content-center" id="fashion-tabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="men-tab" data-bs-toggle="tab" data-bs-target="#men" type="button" role="tab">Men's Styles</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="women-tab" data-bs-toggle="tab" data-bs-target="#women" type="button" role="tab">Women's Styles</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="fashion-content">
+            <div class="tab-pane fade show active" id="men" role="tabpanel">
+                <h3>Casual</h3>
+                <div class="row" id="men-casual"></div>
+                <h3>Formal</h3>
+                <div class="row" id="men-formal"></div>
+                <h3>Accessories</h3>
+                <div class="row" id="men-accessories"></div>
+            </div>
+            <div class="tab-pane fade" id="women" role="tabpanel">
+                <h3>Casual</h3>
+                <div class="row" id="women-casual"></div>
+                <h3>Formal</h3>
+                <div class="row" id="women-formal"></div>
+                <h3>Accessories</h3>
+                <div class="row" id="women-accessories"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Explore More Section -->
+    <section class="container my-5">
+        <div id="explore-more">
+            <button class="btn btn-affiliate btn-lg" onclick="showAllProducts()">Explore All Products</button>
+        </div>
+        <div id="all-products" class="row" style="display: none;">
+            <h2 class="section-title">All Products</h2>
+            <div class="mb-3">
+                <input type="text" id="search-all" class="form-control" placeholder="Search all products...">
+                <div class="mt-2">
+                    <button class="btn btn-outline-secondary filter-btn" onclick="filterProducts('all')">All</button>
+                    <button class="btn btn-outline-secondary filter-btn" onclick="filterProducts('men')">Men</button>
+                    <button class="btn btn-outline-secondary filter-btn" onclick="filterProducts('women')">Women</button>
+                </div>
+            </div>
+            <!-- All products loaded here -->
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2023 Fashion Buddhi Affiliate Site. All rights reserved. Affiliate disclosures apply.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Mock fashion product data (replace with API, e.g., fashion affiliate feeds)
+        let products = {};
+
+        fetch('products.json')
+        .then(response => response.json())
+        .then(data => {
+        products = data;
+
+      // render categories
+      renderCategory('men-casual', products.men.casual);
+      renderCategory('women-casual', products.women.casual);
+  });
+
+
+        // Render slider
+        function renderSlider() {
+            const sliderInner = document.getElementById('slider-inner');
+            products.slider.forEach((product, index) => {
+                const activeClass = index === 0 ? 'active' : '';
+                const slide = `
+                    <div class="carousel-item ${activeClass}">
+                        <img src="${product.image}" class="d-block w-100" alt="${product.title}">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>${product.title}</h5>
+                            <p>Price: ${product.price} | <a href="${product.link}" class="btn btn-affiliate" target="_blank">Shop Now</a></p>
+                        </div>
+                    </div>
+                `;
+                sliderInner.innerHTML += slide;
+            });
+        }
+
+        // Render category sections
+        function renderCategory(containerId, items) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            items.forEach(product => {
+                const card = `
+                    <div class="col-md-4 mb-4">
+                        <div class="card product-card">
+                            <img src="${product.image}" class="card-img-top" alt="${product.title}">
+                           <div class="card-body">
+                                <span class="badge bg-warning text-dark mb-2">Trending</span>
+                                <h5 class="card-title">${product.title}</h5>
+                                <p class="card-text">Price: ${product.price}</p>
+                                <div class="review"><strong>Review:</strong> ${product.review}</div>
+                                <a href="${product.link}" class="btn btn-affiliate btn-block mt-3" target="_blank">Buy Now</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+        }
+
+        // Show all products
+        function showAllProducts() {
+            document.getElementById('all-products').style.display = 'block';
+            renderAllProducts(products);
+        }
+
+        // Render all products with filters
+        function renderAllProducts(data, filter = 'all') {
+            const container = document.getElementById('all-products').querySelector('.row:not(.mb-3)');
+            container.innerHTML = '';
+            let allItems = [];
+            if (filter === 'all') {
+                allItems = [...data.slider, ...Object.values(data.men).flat(), ...Object.values(data.women).flat()];
+            } else {
+                allItems = Object.values(data[filter]).flat();
+            }
+            allItems.forEach(product => {
+                const card = `
+                    <div class="col-md-3 mb-4">
+                        <div class="card product-card">
+                            <img src="${product.image}" class="card-img-top" alt="${product.title}">
+                            <div class="card-body">
+                                <span class="badge bg-warning text-dark mb-2">Trending</span>
+                                <h5 class="card-title">${product.title}</h5>
+                                <p class="card-text">Price: ${product.price}</p>
+                                <div class="review"><strong>Review:</strong> ${product.review}</div>
+                                <a href="${product.link}" class="btn btn-affiliate btn-block mt-3" target="_blank">Buy Now</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+        }
+
+        // Filter products
+        function filterProducts(filter) {
+            renderAllProducts(products, filter);
+        }
+
+        // Search all products
+        document.getElementById('search-all').addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const allItems = [...products.slider, ...Object.values(products.men).flat(), ...Object.values(products.women).flat()];
+            const filtered = allItems.filter(p => p.title.toLowerCase().includes(query));
+            const container = document.getElementById('all-products').querySelector('.row:not(.mb-3)');
+            container.innerHTML = '';
+            filtered.forEach(product => {
+                // Reuse card rendering logic
+                const card = `
+                    <div class="col-md-3 mb-4">
+                        <div class="card product-card">
+                            <img src="${product.image}" class="card-img-top" alt="${product.title}">
+                            <div class="card-body">
+                                <span class="badge bg-warning text-dark mb-2">Trending</span>
+                                <h5 class="card-title">${product.title}</h5>
+                                <p class="card-text">Price: ${product.price}</p>
+                                <div class="review"><strong>Review:</strong> ${product.review}</div>
+                                <a href="${product.link}" class="btn btn-affiliate btn-block mt-3" target="_blank">Buy Now</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += card;
+            });
+        });
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderSlider();
+            renderCategory('men-casual', products.men.casual);
+            renderCategory('men-formal', products.men.formal);
+            renderCategory('men-accessories', products.men.accessories);
+            renderCategory('women-casual', products.women.casual);
+            renderCategory('women-formal', products.women.formal);
+            renderCategory('women-accessories', products.women.accessories);
+        });
+    </script>
+</body>
+</html>
