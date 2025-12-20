@@ -22,15 +22,3 @@
     ]
   }
 }
-"men": {
-  "formal": [
-    {
-      "title": "Men's Suit",
-      "price": "$199.99",
-      "image": "images/suit1.jpg",
-      "review": "Sharp look ★★★★★",
-      "link": "https://affiliate-link.com/mensuit"
-    }
-  ]
-}
-
