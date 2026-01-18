@@ -1,15 +1,6 @@
 {
   "men": {
     "casual": [
-    "formal": [  
-       {
-        "title": "Men's Casual Jeans",
-        "price": "₹1,999",
-        "image": "images/suit1.jpg",
-        "review": "Perfect for weekends ★★★★☆",
-        "link": "https://affiliate-link.com/jeans"
-      }  
-    ]
       {
         "title": "Men's Casual Jeans",
         "price": "₹1,999",
@@ -17,8 +8,16 @@
         "review": "Perfect for weekends ★★★★☆",
         "link": "https://affiliate-link.com/jeans"
       }  
+    ], 
+     "formal": [  
+       {
+       "title": "Men's Formal Shirt",
+       "price": "₹1,499",
+       "image": "images/formalshirt1.jpg",
+       "review": "Perfect office wear ★★★★☆",
+       "link": "https://affiliate-link.com/formalshirt"
+      }
     ]
-     
   },
   "women": {
     "casual": [
@@ -32,6 +31,7 @@
     ]
   }
 }
+
 
 
 
