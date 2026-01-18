@@ -7,6 +7,15 @@
         "image": "images/bj1.jpg",
         "review": "Perfect for weekends ★★★★☆",
         "link": "https://affiliate-link.com/jeans"
+      }  
+    ]
+    "formals": [
+      {
+  "title": "Men's Formal Shirt",
+  "price": "₹1,499",
+  "image": "images/formalshirt1.jpg",
+  "review": "Perfect office wear ★★★★☆",
+  "link": "https://affiliate-link.com/formalshirt"
       }
     ]
   },
@@ -22,3 +31,4 @@
     ]
   }
 }
+
