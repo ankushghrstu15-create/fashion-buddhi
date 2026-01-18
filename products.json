@@ -9,14 +9,15 @@
         "link": "https://affiliate-link.com/jeans"
       }  
     ]
-    "formals": [
+    "men": {
+    "formal": [
       {
-  "title": "Men's Formal Shirt",
-  "price": "₹1,499",
-  "image": "images/fw1.jpg",
-  "review": "Perfect office wear ★★★★☆",
-  "link": "https://affiliate-link.com/formalshirt"
-      }
+        "title": "Men's Casual Jeans",
+        "price": "₹1,999",
+        "image": "images/suit1.jpg",
+        "review": "Perfect for weekends ★★★★☆",
+        "link": "https://affiliate-link.com/jeans"
+      }  
     ]
   },
   "women": {
@@ -31,5 +32,6 @@
     ]
   }
 }
+
 
 
